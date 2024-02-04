@@ -14,6 +14,8 @@ module.exports = {
       textPrimary: '#000000',
       textSecondary: '#A2A8C1',
       transparent: 'transparent',
+
+      borderPrimary: '#F2F4F6',
     },
     extend: {
       gridTemplateColumns: {

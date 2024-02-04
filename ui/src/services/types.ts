@@ -4,6 +4,7 @@ export type Specialist = {
   lastName: string;
   avatar: string;
   specialization: string;
-  rates: number[];
+  votes: number[];
+  userVote: number;
   isFavorite: boolean;
 };

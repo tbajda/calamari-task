@@ -15,13 +15,13 @@ const CardHeader = () => {
 };
 
 const CardFooter = () => (
-  <footer className="grid grid-cols-2">
-    <Button text="PROFILE" />
+  <footer className="grid grid-cols-2 divide-x-2 divide-borderPrimary border-t-2 border-borderPrimary">
     <Button text="BOOK A VISIT" />
+    <Button text="PROFILE" />
   </footer>
 );
 
-export const SpecialistCard = ({ firstName, lastName, specialization, avatar }: Specialist) => {
+export const SpecialistCard = ({ firstName, lastName, specialization, avatar, userVote, votes }: Specialist) => {
   return (
     <div className="bg-white flex flex-col justify-center shadow-shd">
       <CardHeader />
@@ -34,13 +34,13 @@ export const SpecialistCard = ({ firstName, lastName, specialization, avatar }: 
       </div>
       <div className="flex justify-center text-center text-sm text-textSecondary mb-10">{specialization}</div>
 
-      <div className="grid grid-cols-3 border-b border-grey">
+      <div className="grid grid-cols-3 border-b-2 border-borderPrimary">
         <IconButton icon={<NotificationIcon />} />
         <IconButton icon={<CalendarIcon />} />
         <IconButton icon={<MailIcon />} />
       </div>
 
-      <Rating onVote={() => {}} rating={1} />
+      <Rating onVote={() => {}} rating={userVote} votes={votes} />
 
       <CardFooter />
     </div>

@@ -20,7 +20,8 @@ function createRandomUser() {
     lastName: faker.person.firstName(),
     avatar: faker.image.avatar(),
     specialization: faker.person.jobTitle(),
-    rates: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 7 }),
+    votes: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 7 }),
+    yourVote: faker.number.int({ min: 0, max: 5 }),
     isFavorite: false,
   };
 }
