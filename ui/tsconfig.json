@@ -10,6 +10,13 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "allowJs": true,
+    "paths": {
+      "@*": ["./src/*"],
+      "@services/*": ["./src/services/*"],
+      "@components/*": ["./src/components/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@modules/*": ["./src/modules/*"],
+    },
   },
   "include": ["**/*.ts", "**/*.tsx"],
 }

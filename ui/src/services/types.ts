@@ -1,5 +1,5 @@
 export type Specialist = {
-  userId: string;
+  id: string;
   firstName: string;
   lastName: string;
   avatar: string;

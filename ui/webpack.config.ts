@@ -13,6 +13,11 @@ const config: Configuration = {
         use: 'ts-loader',
       },
       {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+      },
+      {
         test: /\.css$/,
         use: [
           {
@@ -33,6 +38,12 @@ const config: Configuration = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@services': path.resolve(__dirname, './src/services/'),
+      '@components': path.resolve(__dirname, './src/components/'),
+      '@assets': path.resolve(__dirname, './src/assets/'),
+      '@modules': path.resolve(__dirname, './src/modules/'),
+    },
   },
   output: {
     filename: 'bundle.js',

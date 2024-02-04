@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const CALAMARI = require("./calamari");
-const colors = require("colors");
 
+const colors = require("colors");
 const { faker } = require("@faker-js/faker");
 
 const app = express();
@@ -15,7 +15,7 @@ colors.enable();
 
 function createRandomUser() {
   return {
-    userId: faker.string.uuid(),
+    id: faker.string.uuid(),
     firstName: faker.person.firstName(),
     lastName: faker.person.firstName(),
     avatar: faker.image.avatar(),
@@ -26,7 +26,7 @@ function createRandomUser() {
 }
 
 const USERS = faker.helpers.multiple(createRandomUser, {
-  count: 5,
+  count: 4,
 });
 
 app.get("/specialists", (req, res) => {
