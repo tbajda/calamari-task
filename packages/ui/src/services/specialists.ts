@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Specialist } from './types';
+import { Specialist } from 'specialist-types';
 
 // Define a service using a base URL and expected endpoints
 export const specialistsApi = createApi({

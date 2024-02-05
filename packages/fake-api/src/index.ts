@@ -3,7 +3,7 @@ import cors from "cors";
 
 import colors from "colors";
 import { faker } from "@faker-js/faker";
-import { Specialist } from "./types";
+import { Specialist } from "specialist-types";
 import { CALAMARI } from "./calamari";
 
 const app = express();

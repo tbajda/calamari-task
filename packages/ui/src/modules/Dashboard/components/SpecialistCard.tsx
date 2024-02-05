@@ -1,6 +1,6 @@
 import { CalendarIcon, HeartIcon, MailIcon, MenuIcon, NotificationIcon } from '@assets';
 import { Avatar, Button, IconButton, Rating } from '@components';
-import { Specialist } from '@services/types';
+import { Specialist } from 'specialist-types';
 
 const CardHeader = () => {
   return (

@@ -15,6 +15,7 @@
     "express": "^4.18.2"
   },
   "devDependencies": {
+    "specialist-types": "*",
     "@faker-js/faker": "^8.4.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

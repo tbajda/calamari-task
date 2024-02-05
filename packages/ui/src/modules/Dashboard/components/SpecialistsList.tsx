@@ -1,4 +1,4 @@
-import { useGetSpecialistsQuery } from '../../../services/specialists';
+import { useGetSpecialistsQuery } from '@services';
 import { SpecialistCard } from './SpecialistCard';
 
 export const SpecialistsList = () => {
