@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack serve",
+    "start": "webpack serve --open",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "eslint --max-warnings 0 --cache \"**/*.{js,jsx,ts,tsx}\""
   },
