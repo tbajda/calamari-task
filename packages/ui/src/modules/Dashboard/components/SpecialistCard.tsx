@@ -1,5 +1,6 @@
 import { CalendarIcon, HeartIcon, MailIcon, MenuIcon, NotificationIcon } from '@assets';
 import { Avatar, Button, IconButton, Rating } from '@components';
+import { useAddToFavoriteMutation } from '@services';
 import { Specialist } from 'specialist-types';
 
 const CardHeader = () => {
@@ -21,10 +22,27 @@ const CardFooter = () => (
   </footer>
 );
 
-export const SpecialistCard = ({ firstName, lastName, specialization, avatar, userVote, votes }: Specialist) => {
+type Props = {
+  specialist: Specialist;
+};
+
+export const SpecialistCard = ({ specialist }: Props) => {
+  const { id, firstName, lastName, specialization, avatar, userVote, votes, isFavorite } = specialist;
+
+  const [mutate] = useAddToFavoriteMutation();
+
   return (
     <div className="bg-white flex flex-col justify-center shadow-shd">
-      <CardHeader />
+      <div className="flex justify-between pt-5 pr-5 pl-2 items-center">
+        <div className="p-4 hover:bg-lightGrey cursor-pointer group rounded ">
+          <MenuIcon className="fill-grey group-hover:fill-primary" />
+        </div>
+
+        <HeartIcon
+          className={`hover:fill-primary cursor-pointer ${isFavorite ? 'fill-primary' : 'fill-grey'}`}
+          onClick={() => mutate({ id })}
+        />
+      </div>
 
       <div className="flex justify-center mb-6">
         <Avatar image={avatar} />
@@ -42,7 +60,10 @@ export const SpecialistCard = ({ firstName, lastName, specialization, avatar, us
 
       <Rating onVote={() => {}} rating={userVote} votes={votes} />
 
-      <CardFooter />
+      <footer className="grid grid-cols-2 divide-x-2 divide-borderPrimary border-t-2 border-borderPrimary">
+        <Button text="BOOK A VISIT" />
+        <Button text="PROFILE" />
+      </footer>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { ListHeader } from './components/ListHeader';
 import { SpecialistsList } from './components/SpecialistsList';
-import { useGetSpecialistsQuery } from '@services';
+import { useGetFavoritesQuery } from '@services';
 
 export const MySpecialists = () => {
-  const { data, isLoading } = useGetSpecialistsQuery(null);
+  const { data, isLoading } = useGetFavoritesQuery(null);
 
   return (
     <>

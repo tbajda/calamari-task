@@ -11,13 +11,13 @@ export const SpecialistsList = ({ data, isLoading }: Props) => {
     return <div className="flex justify-center items-center">Loading...</div>;
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return <div className="flex justify-center items-center">No data :(</div>;
   }
 
   return (
     <div className="grid grid-cols-auto-fill-280 gap-8 justify-center items-center">
-      {data?.map((specialists) => <SpecialistCard key={specialists.id} {...specialists} />)}
+      {data?.map((specialist) => <SpecialistCard key={specialist.id} specialist={specialist} />)}
     </div>
   );
 };
