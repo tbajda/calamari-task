@@ -20,13 +20,13 @@ const createRandomUser = (): Specialist => ({
   lastName: faker.person.firstName(),
   avatar: faker.image.avatar(),
   specialization: faker.person.jobTitle(),
-  votes: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 7 }),
+  votes: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 40 }),
   userVote: faker.number.int({ min: 0, max: 5 }),
   isFavorite: false,
 });
 
 const USERS = faker.helpers.multiple(createRandomUser, {
-  count: 4,
+  count: 20,
 });
 
 app.get("/specialists", (req, res) => {

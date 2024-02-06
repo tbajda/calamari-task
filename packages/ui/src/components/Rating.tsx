@@ -15,13 +15,13 @@ export const Rating = ({ rating, votes, onVote }: Props) => {
   const totalVotes = votes.length;
 
   const averageRating = useMemo(
-    () => (votes.reduce((acc, v) => acc + v, 0) / votes.length).toFixed(1).replace('.', ','),
-    [votes],
+    () => (totalVotes > 0 ? (votes.reduce((acc, v) => acc + v, 0) / votes.length).toFixed(1).replace('.', ',') : 0),
+    [votes, totalVotes],
   );
 
   return (
     <div className="gap-2 py-5 px-8 flex justify-between items-center">
-      <div className="flex">
+      <div className="flex gap-2">
         {stars.map((star) => (
           <StarIcon
             style={{

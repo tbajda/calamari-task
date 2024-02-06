@@ -5,5 +5,5 @@ type Props = {
 };
 
 export const Avatar = ({ image }: Props) => {
-  return <img className="rounded-full w-[100px]" src={image} alt="avatar" />;
+  return <img className="rounded-full w-[100px] min-h-[100px]" src={image} alt="avatar" />;
 };

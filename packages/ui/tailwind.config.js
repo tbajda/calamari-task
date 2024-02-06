@@ -19,10 +19,11 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        'auto-fill-250': 'repeat(auto-fill, minmax(250px, 1fr))',
+        'auto-fill-280': 'repeat(auto-fill, minmax(280px, 1fr))',
       },
       boxShadow: {
         shd: '0px 3px 16px 0px #E7EAF759',
+        input: '0px 3px 16px 0px #2211660D',
       },
     },
   },

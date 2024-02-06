@@ -6,7 +6,7 @@ type Props = {
 export const Button = ({ text, onClick }: Props) => {
   return (
     <button
-      className="p-6 text-xs text-textSecondary hover:bg-primary hover:text-white hover:font-semibold"
+      className="p-6 text-xs text-textSecondary transition hover:bg-primary hover:text-white hover:font-semibold"
       onClick={onClick}
     >
       {text}
