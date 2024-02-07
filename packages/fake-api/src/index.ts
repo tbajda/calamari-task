@@ -20,14 +20,16 @@ const createRandomUser = (): Specialist => ({
   lastName: faker.person.firstName(),
   avatar: faker.image.avatar(),
   specialization: faker.person.jobTitle(),
-  votes: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 40 }),
-  userVote: faker.number.int({ min: 0, max: 5 }),
+  votes: faker.helpers.arrayElements([1, 2, 3, 4, 5], { min: 0, max: 120 }),
+  userVote: 0,
   isFavorite: false,
 });
 
 const USERS = faker.helpers.multiple(createRandomUser, {
   count: 20,
 });
+
+app.use(express.json());
 
 app.get("/all-favorite", (req, res) => {
   res.send(USERS);
@@ -37,7 +39,7 @@ app.get("/my-specialists", (req, res) => {
   res.send(USERS.filter((user) => user.isFavorite));
 });
 
-app.put("/specialists/add-to-favorite/:id", (req, res) => {
+app.put("/favorites/add/:id", (req, res) => {
   const specialist = findSpecialist(req, res);
 
   if (specialist?.isFavorite) {
@@ -47,6 +49,29 @@ app.put("/specialists/add-to-favorite/:id", (req, res) => {
   }
 
   specialist.isFavorite = true;
+
+  res.send(specialist);
+});
+
+app.put("/favorites/remove/:id", (req, res) => {
+  const specialist = findSpecialist(req, res);
+
+  if (!specialist.isFavorite) {
+    return res
+      .status(400)
+      .send({ errorMessage: `Specialist is already set as not favorite` });
+  }
+
+  specialist.isFavorite = false;
+
+  res.send(specialist);
+});
+
+app.patch("/vote/:id", (req, res) => {
+  const specialist = findSpecialist(req, res);
+
+  specialist.votes.push(req.body.vote);
+  specialist.userVote = req.body.vote;
 
   res.send(specialist);
 });

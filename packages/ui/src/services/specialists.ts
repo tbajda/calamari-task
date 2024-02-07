@@ -14,24 +14,103 @@ export const specialistsApi = createApi({
       query: () => `my-specialists`,
       providesTags: ['Favorites'],
     }),
-    addToFavorite: builder.mutation<void, Pick<Specialist, 'id'> & Partial<Specialist>>({
-      query: ({ id }) => ({
-        url: `specialists/add-to-favorite/${id}`,
+    addToFavorite: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `favorites/add/${id}`,
         method: 'PUT',
       }),
       invalidatesTags: ['Favorites'],
-      onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
-            const index = draft.findIndex((it) => it.id === id);
+            const newData = draft.map((item) => {
+              if (item.id === id) {
+                return {
+                  ...item,
+                  isFavorite: true,
+                };
+              }
+              return item;
+            });
 
-            draft[index].isFavorite = true;
-
-            return draft;
+            return newData;
           }),
         );
 
         queryFulfilled.catch(patchResult.undo);
+      },
+    }),
+    removeFromFavorites: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `favorites/remove/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Favorites'],
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
+            const newData = draft.map((item) => {
+              if (item.id === id) {
+                return {
+                  ...item,
+                  isFavorite: false,
+                };
+              }
+              return item;
+            });
+
+            return newData;
+          }),
+        );
+
+        queryFulfilled.catch(patchResult.undo);
+      },
+    }),
+    vote: builder.mutation<void, { id: string; vote: number }>({
+      query: ({ id, vote }) => ({
+        url: `vote/${id}`,
+        method: 'PATCH',
+        body: {
+          vote,
+        },
+      }),
+      onQueryStarted({ id, vote }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
+            const newData = draft.map((item) => {
+              if (item.id === id) {
+                return {
+                  ...item,
+                  userVote: vote,
+                  votes: [...item.votes, vote],
+                };
+              }
+              return item;
+            });
+
+            return newData;
+          }),
+        );
+
+        const patchFavoritesResult = dispatch(
+          specialistsApi.util.updateQueryData('getFavorites', null, (draft) => {
+            const newData = draft.map((item) => {
+              if (item.id === id) {
+                return {
+                  ...item,
+                  userVote: vote,
+                  votes: [...item.votes, vote],
+                };
+              }
+              return item;
+            });
+
+            return newData;
+          }),
+        );
+
+        queryFulfilled.catch(patchResult.undo);
+        queryFulfilled.catch(patchFavoritesResult.undo);
       },
     }),
   }),
@@ -39,4 +118,10 @@ export const specialistsApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetSpecialistsQuery, useGetFavoritesQuery, useAddToFavoriteMutation } = specialistsApi;
+export const {
+  useGetSpecialistsQuery,
+  useGetFavoritesQuery,
+  useAddToFavoriteMutation,
+  useRemoveFromFavoritesMutation,
+  useVoteMutation,
+} = specialistsApi;

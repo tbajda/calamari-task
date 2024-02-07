@@ -1,6 +1,6 @@
 import { CalendarIcon, HeartIcon, MailIcon, MenuIcon, NotificationIcon } from '@assets';
 import { Avatar, Button, IconButton, Rating } from '@components';
-import { useAddToFavoriteMutation } from '@services';
+import { useAddToFavoriteMutation, useRemoveFromFavoritesMutation, useVoteMutation } from '@services';
 import { Specialist } from 'specialist-types';
 
 const CardHeader = () => {
@@ -29,7 +29,17 @@ type Props = {
 export const SpecialistCard = ({ specialist }: Props) => {
   const { id, firstName, lastName, specialization, avatar, userVote, votes, isFavorite } = specialist;
 
-  const [mutate] = useAddToFavoriteMutation();
+  const [addToFavorite] = useAddToFavoriteMutation();
+  const [removeFromFavorites] = useRemoveFromFavoritesMutation();
+  const [rateSpecialist] = useVoteMutation();
+
+  const onHeartClick = () => {
+    isFavorite ? removeFromFavorites(id) : addToFavorite(id);
+  };
+
+  const onVote = (vote: number) => {
+    rateSpecialist({ id, vote });
+  };
 
   return (
     <div className="bg-white flex flex-col justify-center shadow-shd">
@@ -40,7 +50,7 @@ export const SpecialistCard = ({ specialist }: Props) => {
 
         <HeartIcon
           className={`hover:fill-primary cursor-pointer ${isFavorite ? 'fill-primary' : 'fill-grey'}`}
-          onClick={() => mutate({ id })}
+          onClick={onHeartClick}
         />
       </div>
 
@@ -58,7 +68,7 @@ export const SpecialistCard = ({ specialist }: Props) => {
         <IconButton icon={<MailIcon />} />
       </div>
 
-      <Rating onVote={() => {}} rating={userVote} votes={votes} />
+      <Rating onVote={onVote} rating={userVote} votes={votes} />
 
       <footer className="grid grid-cols-2 divide-x-2 divide-borderPrimary border-t-2 border-borderPrimary">
         <Button text="BOOK A VISIT" />
