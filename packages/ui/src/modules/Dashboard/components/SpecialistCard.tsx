@@ -27,7 +27,7 @@ export const SpecialistCard = ({ specialist }: Props) => {
   );
 
   return (
-    <div className="bg-white flex flex-col justify-center shadow-shd">
+    <div className="bg-white flex flex-col justify-center shadow-shd border-2 border-transparent hover:border-primary rounded">
       <div className="flex justify-between pt-5 pr-5 pl-2 items-center">
         <div className="p-4 hover:bg-lightGrey cursor-pointer group rounded ">
           <MenuIcon className="fill-grey group-hover:fill-primary" />

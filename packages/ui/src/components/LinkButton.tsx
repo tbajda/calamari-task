@@ -8,11 +8,8 @@ type Props = {
 export const LinkButton = ({ text, to }: Props) => {
   return (
     <NavLink
-      className={({
-        isActive,
-      }) => `text-center py-4 text-sm text-textSecondary hover:bg-primary hover:text-white border-2
-      hover:font-semibold border-borderPrimary w-52
-            ${isActive ? 'bg-primary text-white font-semibold' : 'bg-none'}`}
+      className={({ isActive }) => `text-center py-4 text-sm text-textSecondary  border-2 border-borderPrimary w-52
+            ${isActive ? 'bg-primary text-white font-semibold hover:text-white' : 'bg-none hover:text-primary'}`}
       to={to}
     >
       {text}
