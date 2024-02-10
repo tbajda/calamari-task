@@ -1,17 +1,32 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Specialist } from 'specialist-types';
+import { Filters, ListResponse, Specialist } from 'specialist-types';
 
-// Define a service using a base URL and expected endpoints
 export const specialistsApi = createApi({
   reducerPath: 'specialistsApi',
   tagTypes: ['Favorites'],
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
   endpoints: (builder) => ({
-    getSpecialists: builder.query<Specialist[], null>({
-      query: () => `all-favorite`,
+    getSpecialists: builder.query<ListResponse<Specialist>, Filters>({
+      query: ({ search, page }) => ({
+        url: `all-favorite?page=${page}&search=${search}`,
+      }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
-    getFavorites: builder.query<Specialist[], null>({
-      query: () => `my-specialists`,
+    getFavorites: builder.query<ListResponse<Specialist>, Filters>({
+      query: ({ search, page }) => ({
+        url: `my-specialists?page=${page}&search=${search}`,
+      }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
       providesTags: ['Favorites'],
     }),
     addToFavorite: builder.mutation<void, string>({
@@ -22,8 +37,8 @@ export const specialistsApi = createApi({
       invalidatesTags: ['Favorites'],
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
-            const newData = draft.map((item) => {
+          specialistsApi.util.updateQueryData('getSpecialists', {}, (draft) => {
+            const newData = draft.response.map((item) => {
               if (item.id === id) {
                 return {
                   ...item,
@@ -33,7 +48,10 @@ export const specialistsApi = createApi({
               return item;
             });
 
-            return newData;
+            return {
+              ...draft,
+              response: newData,
+            };
           }),
         );
 
@@ -48,8 +66,8 @@ export const specialistsApi = createApi({
       invalidatesTags: ['Favorites'],
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
-            const newData = draft.map((item) => {
+          specialistsApi.util.updateQueryData('getSpecialists', {}, (draft) => {
+            const newData = draft.response.map((item) => {
               if (item.id === id) {
                 return {
                   ...item,
@@ -59,7 +77,10 @@ export const specialistsApi = createApi({
               return item;
             });
 
-            return newData;
+            return {
+              ...draft,
+              response: newData,
+            };
           }),
         );
 
@@ -76,8 +97,8 @@ export const specialistsApi = createApi({
       }),
       onQueryStarted({ id, vote }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          specialistsApi.util.updateQueryData('getSpecialists', null, (draft) => {
-            const newData = draft.map((item) => {
+          specialistsApi.util.updateQueryData('getSpecialists', {}, (draft) => {
+            const newData = draft.response.map((item) => {
               if (item.id === id) {
                 return {
                   ...item,
@@ -88,13 +109,16 @@ export const specialistsApi = createApi({
               return item;
             });
 
-            return newData;
+            return {
+              ...draft,
+              response: newData,
+            };
           }),
         );
 
         const patchFavoritesResult = dispatch(
-          specialistsApi.util.updateQueryData('getFavorites', null, (draft) => {
-            const newData = draft.map((item) => {
+          specialistsApi.util.updateQueryData('getFavorites', {}, (draft) => {
+            const newData = draft.response.map((item) => {
               if (item.id === id) {
                 return {
                   ...item,
@@ -105,7 +129,10 @@ export const specialistsApi = createApi({
               return item;
             });
 
-            return newData;
+            return {
+              ...draft,
+              response: newData,
+            };
           }),
         );
 
@@ -116,8 +143,6 @@ export const specialistsApi = createApi({
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
   useGetSpecialistsQuery,
   useGetFavoritesQuery,

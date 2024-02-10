@@ -3,7 +3,7 @@ import cors from "cors";
 
 import colors from "colors";
 import { faker } from "@faker-js/faker";
-import { Specialist } from "specialist-types";
+import { ListResponse, Specialist } from "specialist-types";
 import { CALAMARI } from "./calamari";
 
 const app = express();
@@ -26,17 +26,44 @@ const createRandomUser = (): Specialist => ({
 });
 
 const USERS = faker.helpers.multiple(createRandomUser, {
-  count: 20,
+  count: 5000,
 });
+
+const PAGE_SIZE = 8;
 
 app.use(express.json());
 
 app.get("/all-favorite", (req, res) => {
-  res.send(USERS);
+  const search = req.query.search as string;
+  const page = parseInt(req.query.page as string);
+
+  const filteredUsers = searchByNames(USERS, search);
+
+  const response: ListResponse<Specialist> = {
+    page,
+    total: filteredUsers.length,
+    totalPages: Math.ceil(filteredUsers.length / PAGE_SIZE),
+    response: paginate(filteredUsers, PAGE_SIZE, page),
+  };
+
+  res.send(response);
 });
 
 app.get("/my-specialists", (req, res) => {
-  res.send(USERS.filter((user) => user.isFavorite));
+  const search = req.query.search as string;
+  const page = parseInt(req.query.page as string);
+  const favoriteUsers = USERS.filter((user) => user.isFavorite);
+
+  const filteredUsers = searchByNames(favoriteUsers, search);
+
+  const response: ListResponse<Specialist> = {
+    page,
+    total: filteredUsers.length,
+    totalPages: Math.ceil(filteredUsers.length / PAGE_SIZE),
+    response: paginate(filteredUsers, 5, page),
+  };
+
+  res.send(response);
 });
 
 app.put("/favorites/add/:id", (req, res) => {
@@ -88,4 +115,18 @@ function findSpecialist(req: any, res: any) {
     throw res.status(404).send({ errorMessage: `Server does not exist` });
   }
   return specialist;
+}
+
+function searchByNames(users: Specialist[], searchKey: string) {
+  const key = searchKey.toLowerCase().trim();
+
+  return users.filter(
+    ({ firstName, lastName }) =>
+      firstName.toLowerCase().includes(key) ||
+      lastName.toLowerCase().includes(key)
+  );
+}
+
+function paginate(users: Specialist[], pageSize = 5, pageNumber: number) {
+  return users.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
 }

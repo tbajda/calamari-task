@@ -1,14 +1,22 @@
+import { Pagination } from '@components';
+import { useFilters } from '@hooks';
+import { useGetFavoritesQuery } from '@services';
 import { ListHeader } from './components/ListHeader';
 import { SpecialistsList } from './components/SpecialistsList';
-import { useGetFavoritesQuery } from '@services';
 
 export const MySpecialists = () => {
-  const { data, isLoading } = useGetFavoritesQuery(null);
+  const { search, page, onSearch, onPageChange } = useFilters();
+
+  const { data, isLoading } = useGetFavoritesQuery({
+    search,
+    page,
+  });
 
   return (
     <>
-      <ListHeader dataCount={data?.length} />
-      <SpecialistsList data={data} isLoading={isLoading} />
+      <ListHeader dataCount={data?.total} onSearch={onSearch} title={'My specialists'} />
+      <SpecialistsList data={data?.response} isLoading={isLoading} />
+      <Pagination page={page} totalPages={data?.totalPages} onPageChange={onPageChange} />
     </>
   );
 };

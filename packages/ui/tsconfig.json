@@ -15,7 +15,8 @@
       "@services/*": ["./src/services/*"],
       "@components/*": ["./src/components/*"],
       "@assets/*": ["./src/assets/*"],
-      "@modules/*": ["./src/modules/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]
