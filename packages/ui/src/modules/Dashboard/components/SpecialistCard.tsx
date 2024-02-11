@@ -40,7 +40,7 @@ export const SpecialistCard = ({ specialist }: Props) => {
       </div>
 
       <div className="flex justify-center mb-6">
-        <Avatar image={avatar} />
+        <Avatar image={avatar} firstName={firstName} lastName={lastName} />
       </div>
       <div className="flex justify-center text-base">
         {firstName} {lastName}

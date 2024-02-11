@@ -7,6 +7,9 @@ module.exports = {
       white: '#ffffff',
       primary: '#3540FF',
       secondary: '#00E3EE',
+      primaryLight: '#DEEAFF',
+      tertiary: '#FFB942',
+      tertiaryLight: '#FFF5DE',
 
       grey: '#C5CDDA',
       lightGrey: '#F3F5FC',

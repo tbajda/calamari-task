@@ -8,9 +8,9 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
-        use: 'ts-loader',
+        use: ['babel-loader'],
       },
       {
         test: /\.svg$/i,

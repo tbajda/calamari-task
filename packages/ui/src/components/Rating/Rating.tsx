@@ -1,7 +1,7 @@
 import { StarIcon } from '@assets';
 import { useMemo, useState } from 'react';
 
-type Props = {
+export type Props = {
   rating: number;
   votes: number[];
   onVote: (vote: number) => void;
@@ -24,11 +24,9 @@ export const Rating = ({ rating, votes, onVote }: Props) => {
       <div className="flex gap-2">
         {stars.map((star) => (
           <StarIcon
-            style={{
-              fill: star + 1 <= (hover || rating) ? '#00E3EE' : '#C5CDDA',
-            }}
+            data-testid={`star-${star + 1}`}
             key={star}
-            className="fill-grey cursor-pointer"
+            className={`cursor-pointer ${star + 1 <= (hover || rating) ? 'fill-secondary' : 'fill-grey'}`}
             onMouseEnter={() => setHover(star + 1)}
             onMouseLeave={() => setHover(0)}
             onClick={() => onVote(star + 1)}

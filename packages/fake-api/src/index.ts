@@ -120,10 +120,8 @@ function findSpecialist(req: any, res: any) {
 function searchByNames(users: Specialist[], searchKey: string) {
   const key = searchKey.toLowerCase().trim();
 
-  return users.filter(
-    ({ firstName, lastName }) =>
-      firstName.toLowerCase().includes(key) ||
-      lastName.toLowerCase().includes(key)
+  return users.filter(({ firstName, lastName }) =>
+    `${firstName} ${lastName}`.toLowerCase().includes(key)
   );
 }
 
