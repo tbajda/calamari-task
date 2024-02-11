@@ -1,5 +1,5 @@
-import { SpecialistCard } from './SpecialistCard';
 import { Specialist } from 'specialist-types';
+import { SpecialistCard } from '../SpecialistCard';
 
 type Props = {
   data?: Specialist[];

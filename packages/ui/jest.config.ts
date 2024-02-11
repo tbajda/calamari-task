@@ -6,6 +6,7 @@ const config: Config = {
   moduleNameMapper: {
     '^@components(.*)$': '<rootDir>/src/components$1',
     '^@assets(.*)$': '<rootDir>/src/assets$1',
+    '^@services(.*)$': '<rootDir>/src/services$1',
     '\\.(jpg|png|gif|svg|mp4)$': 'identity-obj-proxy',
   },
 };

@@ -4,7 +4,7 @@ import './main.css';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { AllFavorites, MySpecialists } from '@modules/Dashboard';
+import { AllFavorites, MySpecialists } from '@modules';
 
 const rootElement = document.getElementById('root');
 

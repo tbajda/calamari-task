@@ -2,7 +2,7 @@ import { Pagination } from '@components';
 import { useFilters } from '@hooks';
 import { useGetFavoritesQuery } from '@services';
 import { ListHeader } from './components/ListHeader';
-import { SpecialistsList } from './components/SpecialistsList';
+import { SpecialistsList } from './components/SpecialistsList/SpecialistsList';
 
 export const MySpecialists = () => {
   const { search, page, onSearch, onPageChange } = useFilters();
